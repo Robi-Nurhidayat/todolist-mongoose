@@ -52,8 +52,27 @@ app.get('/',function(req,res){
 });
 
 
+app.post('/addTodo',function(req,res){
+
+    const todo = req.body.todo;
+
+    const newTodo = new Todo({
+        todo: todo
+    });
+
+    newTodo.save();
+    
+    res.redirect('/')
+})
+
+
 app.post('/deleteTodo',function(req,res){
-    console.log(req.body.todoId);
+    
+    const idTodo = req.body.todoId;
+
+    Todo.deleteOne({_id : idTodo}, function(err){
+        res.redirect('/');
+    })
 })
 
 app.listen(3000,function(){
